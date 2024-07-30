@@ -42,10 +42,10 @@ def delete_encouragement(number):
 async def on_ready():
     print('Logged in as', {client.user})
 
+responding = True
 @client.event
 async def on_message(msg):
-    print(msg)
-    print(msg.content)
+    global responding
     if msg.author == client.user:
         return
     
@@ -81,14 +81,25 @@ async def on_message(msg):
         if len(db_encouragements) == 0:
             message = 'No encouragement found.'
         await msg.channel.send(message)
-
-    options = starter_encouragements
-    db_encouragements = cur.execute('SELECT * FROM encouragements').fetchall()
-    if len(db_encouragements) > 0:
-        options = options + list(db_encouragements)
-        print(list(db_encouragements))
     
-    if any(word in msg.content for word in sad_words):
-        await msg.channel.send(random.choice(starter_encouragements))
+    if msg.content.startswith('/responding'):
+        value = msg.content.split(' ')[1]
+        if value.lower() == 'true':
+            responding = True
+            await msg.channel.send('Responding is on.')
+        else:
+            responding = False
+            await msg.channel.send('Responding is off.')
+    
+    print(responding)
+    if responding == True:
+        options = starter_encouragements
+        db_encouragements = cur.execute('SELECT * FROM encouragements').fetchall()
+        if len(db_encouragements) > 0:
+            options = options + list(i[0] for i in db_encouragements)
+            print(list(db_encouragements))
+    
+        if any(word in msg.content for word in sad_words):
+            await msg.channel.send(random.choice(options))
 
 client.run(token)
