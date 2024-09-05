@@ -63,3 +63,9 @@ When the poll time ends, the bot will automatically:
 ## DM Settings
 Make sure your **Direct Messages (DMs)** are enabled if you want to receive notifications from the bot regarding poll creation and results.
 
+# Images:
+
+![image](https://github.com/user-attachments/assets/e4449b4c-17d8-4487-a7c9-ffd51aafec53)
+![image](https://github.com/user-attachments/assets/07747a01-ed41-4e6a-998e-423be5b74cf4)
+
+
